@@ -1,0 +1,41 @@
+# CWRU 0 HP DE recordings requested for this project (12 kHz series).
+sampling_rate: 12000
+window_size: 1024
+overlap: 0.5
+# Set to blank to retain the matched sampling rate. Stage 2 evaluates 3200 Hz.
+target_rate: 3200
+ema_alpha: 0.1
+
+# Sampling rates are explicit because CWRU MAT files do not encode them.
+# Update a value only after checking the source recording's CWRU metadata.
+source_sampling_rates:
+  normal_0.mat: 12000
+  IR007_0.mat: 12000
+  B007_0.mat: 12000
+  OR007@6_0.mat: 12000
+
+# Hz, evaluated after optional resampling. Bands span 0 to the 3200 Hz Nyquist.
+fft_bands_hz: [[0, 400], [400, 800], [800, 1200], [1200, 1600]]
+
+# Health-index evaluation settings.
+evaluation_rates: [12000, 3200]
+baseline_fraction: 0.7
+hi_method: zscore_mean
+mahalanobis_regularization: 0.000001
+hi_threshold_quantile: 0.95
+
+# Baseline-detector settings. These are evaluation baselines, not the ESP32 HI.
+fixed_threshold_z: 3.0
+iforest_trees: 100
+iforest_subsample: 256
+iforest_seed: 42
+iforest_threshold_quantile: 0.95
+
+# IMS run-to-failure settings. Set these two fields after downloading one IMS test
+# set beneath data/raw/ims/; do not mix snapshot sequences from different tests.
+ims_snapshot_directory:
+ims_channel:
+ims_sampling_rate: 20480
+ims_baseline_snapshots: 50
+ims_slope_window: 20
+ims_slope_threshold_sigma: 3.0
