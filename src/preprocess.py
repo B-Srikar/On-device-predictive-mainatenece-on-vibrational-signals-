@@ -3,6 +3,12 @@
 This offline script keeps its output lightweight: windowing and the seven
 time-domain / four spectral features are simple enough to reproduce in C for an
 ESP32. SciPy is used here only for offline anti-aliasing and descriptive moments.
+
+Resampling strategy (single-step, source → target):
+  48 kHz normal → 12 kHz  : decimate(q=4)
+  48 kHz normal → 3200 Hz : resample_poly(up=2, down=30)
+  12 kHz fault  → 3200 Hz : resample_poly(up=4, down=15)
+  12 kHz fault  → 12 kHz  : no-op
 """
 
 from __future__ import annotations
@@ -21,10 +27,16 @@ from scipy.stats import kurtosis, skew
 
 
 RECORDINGS = (
-    ("normal_0.mat", "normal"),
-    ("IR007_0.mat", "inner_race"),
-    ("B007_0.mat", "ball"),
-    ("OR007@6_0.mat", "outer_race"),
+    ("normal_0.mat",   "normal"),
+    ("IR007_0.mat",    "inner_race_007"),
+    ("B007_0.mat",     "ball_007"),
+    ("OR007@6_0.mat",  "outer_race_007"),
+    ("IR014_0.mat",    "inner_race_014"),
+    ("B014_0.mat",     "ball_014"),
+    ("OR014@6_0.mat",  "outer_race_014"),
+    ("IR021_0.mat",    "inner_race_021"),
+    ("B021_0.mat",     "ball_021"),
+    ("OR021@6_0.mat",  "outer_race_021"),
 )
 EPSILON = np.finfo(float).eps
 
@@ -95,36 +107,37 @@ def de_signal_and_metadata(path: Path) -> tuple[np.ndarray, dict[str, Any]]:
     return signal, public
 
 
-def downsample(signal: np.ndarray, source_rate: int, target_rate: int) -> np.ndarray:
-    """Anti-alias then reduce sample rate; use decimate for integer factors."""
+def resample_to(signal: np.ndarray, source_rate: int, target_rate: int) -> np.ndarray:
+    """Single-step resample from source_rate to target_rate with anti-aliasing.
+
+    Exact ratios used (per Stage-2 spec):
+      48000 → 12000 : decimate(q=4)         [integer factor]
+      48000 →  3200 : resample_poly(up=2, down=30)
+      12000 → 12000 : no-op
+      12000 →  3200 : resample_poly(up=4, down=15)
+    """
     if source_rate == target_rate:
         return signal
-    if source_rate < target_rate:
-        raise ValueError(f"Cannot downsample {source_rate} Hz to higher {target_rate} Hz")
-    if source_rate % target_rate == 0:
-        # scipy.signal.decimate applies its own anti-aliasing low-pass filter.
-        return decimate(signal, source_rate // target_rate, ftype="fir", zero_phase=True)
+    if source_rate == 48000 and target_rate == 12000:
+        return decimate(signal, 4, ftype="fir", zero_phase=True)
+    if source_rate == 48000 and target_rate == 3200:
+        return resample_poly(signal, 2, 30)
+    if source_rate == 12000 and target_rate == 3200:
+        return resample_poly(signal, 4, 15)
+    # Fallback for any other ratio via Fraction reduction
     ratio = Fraction(target_rate, source_rate)
-    # resample_poly includes an anti-aliasing low-pass FIR and handles 12 kHz -> 3.2 kHz.
+    if ratio.denominator == 1:
+        return decimate(signal, ratio.numerator, ftype="fir", zero_phase=True)
     return resample_poly(signal, ratio.numerator, ratio.denominator)
 
 
 def matched_rate_signal(
     signal: np.ndarray, filename: str, label: str, source_rate: int, base_rate: int, target_rate: int | None
 ) -> tuple[np.ndarray, int]:
-    """Make normal data match the fault base rate, then apply optional target rate."""
-    if label == "normal" and source_rate != base_rate:
-        signal = downsample(signal, source_rate, base_rate)
-        source_rate = base_rate
-    elif source_rate != base_rate:
-        raise ValueError(
-            f"{filename}: {source_rate} Hz differs from sampling_rate {base_rate}; "
-            "only a higher-rate normal file may be matched automatically."
-        )
-    if target_rate is not None:
-        signal = downsample(signal, source_rate, target_rate)
-        source_rate = target_rate
-    return np.asarray(signal, dtype=float), source_rate
+    """Single-step resample from source_rate directly to the pipeline output rate."""
+    out_rate = target_rate if target_rate is not None else base_rate
+    signal = resample_to(np.asarray(signal, dtype=float), source_rate, out_rate)
+    return signal, out_rate
 
 
 def window_signal(signal: np.ndarray, size: int, overlap: float):
@@ -138,6 +151,8 @@ def window_signal(signal: np.ndarray, size: int, overlap: float):
 
 
 def extract_features(window: np.ndarray, rate: int, bands: list[list[float]]) -> dict[str, float]:
+    # Mean-centre the window before all feature computation (Stage-2 spec).
+    window = window - window.mean()
     rms = float(np.sqrt(np.mean(window * window)))
     deviation = float(np.std(window))
     if rms <= EPSILON:
