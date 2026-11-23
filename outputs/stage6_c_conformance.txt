@@ -1,0 +1,42 @@
+=== 1. C VS PYTHON CONFORMANCE (24 stored CWRU windows @ 3200 Hz) ===
+  Quantity                           MaxAbsDiff     MaxRelDiff   Status
+  --------------------------------------------------------------------
+  rms                              8.940697e-08   5.208372e-07     PASS
+  peak_to_peak                     5.960464e-08   1.161187e-07     PASS
+  crest_factor                     3.337860e-06   5.576453e-07     PASS
+  kurtosis                         2.574921e-05   3.436032e-06     PASS
+  log_band_energy_0_400hz          9.536743e-07   1.184008e-07     PASS
+  log_band_energy_400_800hz        9.536743e-07   1.169700e-07     PASS
+  log_band_energy_800_1200hz       9.536743e-07   1.181639e-07     PASS
+  log_band_energy_1200_1600hz      9.536743e-07   1.045833e-07     PASS
+  log1p_HI                         1.549721e-06   2.546667e-06     PASS
+
+=== 2. 200-WINDOW EMA + SLOPE (W=12) + 3-CONSECUTIVE + GATE SEQUENCE ===
+  EMA         : max_abs=9.536743e-07, max_rel=7.461387e-07
+  Slope (W=12): max_abs=4.470348e-08, max_rel=4.710541e-05
+  Exact flags : gated=200/200, slope_valid=200/200, fixed_alarm=200/200, slope_alarm=200/200
+  First alarms: fixed_idx=106, slope_idx=105 (injected machine-off gate at idx 100)
+  Sequence status: PASS
+
+=== 3. LAPTOP BENCHMARK (1024 samples @ 3200 Hz = 0.320 s/window) ===
+  Mean latency   : 17.60 us (0.0176 ms)
+  p99 latency    : 44.00 us (0.0440 ms)
+  Real-time frac : 5.500312e-05 (compute_time / 0.32 s; speedup = 18181x real-time)
+
+=== 4. MEMORY FOOTPRINT (sizeof) ===
+  Static RAM buffers:
+    window_buf[1024]  : 4096 bytes
+    fft_real[1024]    : 4096 bytes
+    fft_imag[1024]    : 4096 bytes
+    hi_features_t     : 32 bytes
+    hi_monitor_t      : 72 bytes
+    hi_monitor_out_t  : 28 bytes
+    TOTAL static RAM  : 12420 bytes (12.13 KiB)
+  Flash constant arrays:
+    HI_BANDS          : 32 bytes
+    HI_BASELINE_MEAN  : 32 bytes
+    HI_BASELINE_STD   : 32 bytes
+    hi_monitor_cfg_t  : 88 bytes
+    Total flash const : 184 bytes (deduplicated config: 120 bytes)
+
+OVERALL RESULT: PASS

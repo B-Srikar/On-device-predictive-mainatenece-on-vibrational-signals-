@@ -1,0 +1,32 @@
+=== 1. ALL 774 CWRU 3200 Hz WINDOWS CONFORMANCE (including normal_1-3) ===
+  Quantity                           MaxAbsDiff     MaxRelDiff   Status
+  --------------------------------------------------------------------
+  rms                              1.043081e-07   9.434348e-07     PASS
+  peak_to_peak                     1.192093e-07   1.213639e-07     PASS
+  crest_factor                     3.337860e-06   8.370855e-07     PASS
+  kurtosis                         2.574921e-05   3.795963e-06     PASS
+  log_band_energy_0_400hz          9.536743e-07   1.190524e-07     PASS
+  log_band_energy_400_800hz        9.536743e-07   1.189951e-07     PASS
+  log_band_energy_800_1200hz       9.536743e-07   1.181639e-07     PASS
+  log_band_energy_1200_1600hz      9.536743e-07   1.165438e-07     PASS
+  log1p_HI                         7.793307e-06   8.735681e-05     PASS
+
+  Worst 3 windows by max relative error:
+    #1: label=normal_2         file=normal_2.mat     win= 21 qty=log1p_HI       py=0.08921237 c=0.08920457 abs=7.793e-06 rel=8.736e-05
+    #2: label=normal_2         file=normal_2.mat     win= 16 qty=log1p_HI       py=0.1960528 c=0.1960561 abs=3.338e-06 rel=1.703e-05
+    #3: label=normal_2         file=normal_2.mat     win=  6 qty=log1p_HI       py=0.1243948 c=0.1243929 abs=1.907e-06 rel=1.533e-05
+
+=== 2. EDGE CASES ===
+  constant_0.3       | exp: rc=0 gated=1 rms~0 ptp=0 kurt=0 bands=-69.08 | rc=0 gated=1 rms=2.384e-07 ptp=0.000e+00 crest=1.000 kurt=0.000 b0=-30.50 rawHI=0.000
+  all_zero           | exp: rc=0 gated=1 rms=0 ptp=0 kurt=0 bands=-69.08 | rc=0 gated=1 rms=0.000e+00 ptp=0.000e+00 crest=0.000 kurt=0.000 b0=-69.08 rawHI=0.000
+  clipped_pm5        | exp: rc=0 gated=0 finite ptp=10.0 | rc=0 gated=0 rms=4.415e+00 ptp=1.000e+01 crest=1.132 kurt=1.203 b0=2.27 rawHI=4.015
+  one_nan            | exp: rc=-1 early reject | rc=-1 (error handled safely, monitor untouched)
+
+=== 3. IN-PLACE WINDOW_BUF -> FFT_REAL REUSE CHECK ===
+  Max abs diff (separate vs aliased window_buf/fft_real): feats=0.000000e+00, HI=0.000000e+00
+  RAM saved if aliased: 4096 bytes (4.00 KiB); caveat: mutates window_buf in place (overlap requires raw tail save)
+
+=== CONSTANT ARRAYS (3200 Hz CWRU) ===
+  sizeof(HI_BANDS)=32 B, sizeof(HI_BASELINE_MEAN)=32 B, sizeof(HI_BASELINE_STD)=32 B, sizeof(hi_monitor_config_t)=88 B
+
+CWRU STAGE 6B STATUS: PASS

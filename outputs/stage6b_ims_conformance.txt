@@ -1,0 +1,24 @@
+=== 4. IMS CH 1 (20480 Hz) ALL 982 SNAPSHOTS C VS PYTHON CONFORMANCE ===
+  Thresholds: HI=0.392772 (py=0.392772), slope=0.017787 (py=0.017787)
+  Quantity                           MaxAbsDiff     MaxRelDiff   Status
+  --------------------------------------------------------------------
+  rms                              2.980232e-07   1.617954e-06     PASS
+  peak_to_peak                     2.384186e-07   1.173320e-07     PASS
+  crest_factor                     7.390976e-06   1.946560e-06     PASS
+  kurtosis                         3.814697e-05   7.326180e-06     PASS
+  log_band_energy_0_500hz          9.536743e-07   1.184053e-07     PASS
+  log_band_energy_500_1500hz       4.768372e-07   9.624643e-08     PASS
+  log_band_energy_1500_3000hz      9.536743e-07   1.191523e-07     PASS
+  log_band_energy_3000_6000hz      9.536743e-07   2.147927e-07     PASS
+  log_band_energy_6000_10240hz     9.536743e-07   1.391061e-07     PASS
+  HI_raw                           4.839897e-05   1.461730e-03     FAIL
+  HI_ema                           5.304813e-06   2.267316e-05     PASS
+  slope (W=12, where >=1e-6)       4.702015e-07   7.937767e-02     PASS
+  Exact boolean matches: slope_valid=982/982, fixed_alarm=982/982, slope_alarm=982/982
+  Presumed-healthy alarms (196..491): fixed=0, slope=0
+  C First alarm indices (>=196): fixed=527 (Stage4=527), slope=538 (Stage4=538)
+
+  IMS static RAM (sizeof): snap=81920 + fft_r=4096 + fft_i=4096 + scratch=1404 + feats=36 + mon=72 + out=28 = 91652 B
+  IMS flash consts (sizeof): HI_BANDS=40 B, HI_IMS_BASELINE_MEAN=36 B, HI_IMS_BASELINE_STD=36 B, cfg=96 B
+
+IMS STAGE 6B STATUS: FAIL

@@ -1,0 +1,36 @@
+
+Resampling and windowing (output rate = 3200 Hz):
+  File                   Label                SrcRate     SrcN     ResN Windows
+  ---------------------- -------------------- ------- -------- -------- -------
+
+  [normal resampled @ 3200 Hz]  n=16263
+    mean=0.0126  std=0.0355  min=-0.1268  max=0.1555  rms=0.0377
+  normal_0.mat           normal                 48000   243938    16263      30
+  normal_1.mat           normal_1               48000   483903    32261      62
+  normal_2.mat           normal_2               48000   485063    32338      62
+  normal_3.mat           normal_3               48000   485643    32377      62
+  IR007_0.mat            inner_race_007         12000   121265    32338      62
+  B007_0.mat             ball_007               12000   122571    32686      62
+  OR007@6_0.mat          outer_race_007         12000   121991    32531      62
+  IR014_0.mat            inner_race_014         12000   121846    32493      62
+  B014_0.mat             ball_014               12000   121846    32493      62
+  OR014@6_0.mat          outer_race_014         12000   121846    32493      62
+  IR021_0.mat            inner_race_021         12000   122136    32570      62
+  B021_0.mat             ball_021               12000   121991    32531      62
+  OR021@6_0.mat          outer_race_021         12000   122426    32647      62
+
+Wrote 774 windows to data/processed/features_3200.csv
+Per-class feature summary (mean):
+  ball_007 (windows=62): rms=0.0399096, std=0.0399096, peak_to_peak=0.25376, crest_factor=3.36523, kurtosis=3.04579, skewness=0.0167719, band_energy_0_400hz=0.000105427, band_energy_400_800hz=0.000399779, band_energy_800_1200hz=0.000124129, band_energy_1200_1600hz=0.000168361
+  ball_014 (windows=62): rms=0.0585343, std=0.0585343, peak_to_peak=0.454168, crest_factor=4.0945, kurtosis=3.68149, skewness=-0.0225424, band_energy_0_400hz=0.000278112, band_energy_400_800hz=0.000944155, band_energy_800_1200hz=0.00014317, band_energy_1200_1600hz=0.000390951
+  ball_021 (windows=62): rms=0.0389567, std=0.0389567, peak_to_peak=0.254654, crest_factor=3.46549, kurtosis=3.04559, skewness=-0.000994151, band_energy_0_400hz=8.00872e-05, band_energy_400_800hz=0.000367637, band_energy_800_1200hz=0.000138018, band_energy_1200_1600hz=0.000174025
+  inner_race_007 (windows=62): rms=0.120889, std=0.120889, peak_to_peak=0.84089, crest_factor=3.6663, kurtosis=3.59114, skewness=0.0222364, band_energy_0_400hz=0.000179223, band_energy_400_800hz=0.00190922, band_energy_800_1200hz=0.00174126, band_energy_1200_1600hz=0.00347811
+  inner_race_014 (windows=62): rms=0.044721, std=0.044721, peak_to_peak=0.315272, crest_factor=3.76693, kurtosis=3.36452, skewness=0.0700892, band_energy_0_400hz=0.000181242, band_energy_400_800hz=0.000495052, band_energy_800_1200hz=0.000163557, band_energy_1200_1600hz=0.00016339
+  inner_race_021 (windows=62): rms=0.12967, std=0.12967, peak_to_peak=0.813612, crest_factor=3.29133, kurtosis=3.18932, skewness=-0.0178321, band_energy_0_400hz=0.000323521, band_energy_400_800hz=0.00703125, band_energy_800_1200hz=0.000536424, band_energy_1200_1600hz=0.000519543
+  normal (windows=30): rms=0.0355075, std=0.0355075, peak_to_peak=0.230411, crest_factor=3.38784, kurtosis=2.99071, skewness=-0.00608793, band_energy_0_400hz=0.000156996, band_energy_400_800hz=0.000327117, band_energy_800_1200hz=6.92867e-05, band_energy_1200_1600hz=7.85674e-05
+  normal_1 (windows=62): rms=0.0419948, std=0.0419948, peak_to_peak=0.262575, crest_factor=3.29228, kurtosis=2.84907, skewness=0.0383899, band_energy_0_400hz=0.000439305, band_energy_400_800hz=0.000282393, band_energy_800_1200hz=0.000129548, band_energy_1200_1600hz=3.07381e-05
+  normal_2 (windows=62): rms=0.0392801, std=0.0392801, peak_to_peak=0.242419, crest_factor=3.23767, kurtosis=2.81153, skewness=0.0433241, band_energy_0_400hz=0.000352144, band_energy_400_800hz=0.00024484, band_energy_800_1200hz=0.00011653, band_energy_1200_1600hz=5.81033e-05
+  normal_3 (windows=62): rms=0.0396374, std=0.0396374, peak_to_peak=0.250577, crest_factor=3.33169, kurtosis=2.93388, skewness=0.0993747, band_energy_0_400hz=0.000302461, band_energy_400_800hz=0.000275794, band_energy_800_1200hz=0.000107498, band_energy_1200_1600hz=9.99919e-05
+  outer_race_007 (windows=62): rms=0.0585865, std=0.0585865, peak_to_peak=0.390653, crest_factor=3.5531, kurtosis=3.14342, skewness=0.00190205, band_energy_0_400hz=0.000140073, band_energy_400_800hz=0.00102975, band_energy_800_1200hz=0.00029959, band_energy_1200_1600hz=0.000251302
+  outer_race_014 (windows=62): rms=0.0401477, std=0.0401477, peak_to_peak=0.255984, crest_factor=3.37627, kurtosis=3.01069, skewness=0.0133146, band_energy_0_400hz=0.000140802, band_energy_400_800hz=0.000444654, band_energy_800_1200hz=0.000103468, band_energy_1200_1600hz=0.00012087
+  outer_race_021 (windows=62): rms=0.167721, std=0.167721, peak_to_peak=1.69035, crest_factor=5.90362, kurtosis=7.82029, skewness=0.682014, band_energy_0_400hz=0.000189348, band_energy_400_800hz=0.0109559, band_energy_800_1200hz=0.000437325, band_energy_1200_1600hz=0.00250798

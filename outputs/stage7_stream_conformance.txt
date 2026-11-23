@@ -1,0 +1,28 @@
+=== STREAMING CONFORMANCE: CWRU 3200 Hz (774 windows, 512-sample overlap hops) ===
+  Static RAM sizeof(hi_stream_t) = 12536 bytes (12.24 KiB)
+  rms                      max_abs=1.043081e-07 max_rel=9.434348e-07 PASS
+  peak_to_peak             max_abs=1.192093e-07 max_rel=1.213639e-07 PASS
+  crest_factor             max_abs=3.337860e-06 max_rel=8.370855e-07 PASS
+  kurtosis                 max_abs=2.574921e-05 max_rel=3.795963e-06 PASS
+  log_band_0_400           max_abs=9.536743e-07 max_rel=1.190524e-07 PASS
+  log_band_400_800         max_abs=9.536743e-07 max_rel=1.189951e-07 PASS
+  log_band_800_1200        max_abs=9.536743e-07 max_rel=1.181639e-07 PASS
+  log_band_1200_1600       max_abs=9.536743e-07 max_rel=1.165438e-07 PASS
+  log1p_HI                 max_abs=7.793307e-06 max_rel=8.735681e-05 PASS
+  CWRU STREAM STATUS: PASS
+=== STREAMING CONFORMANCE: IMS 20480 Hz (982 snapshots, 512-sample chunks) ===
+  Static RAM sizeof(hi_stream_t) = 13956 bytes (13.63 KiB; NO 20480-sample buffer)
+  rms                      max_abs=2.980232e-07 max_rel=1.617954e-06 PASS
+  peak_to_peak             max_abs=2.384186e-07 max_rel=1.173320e-07 PASS
+  crest_factor             max_abs=7.390976e-06 max_rel=1.946560e-06 PASS
+  kurtosis                 max_abs=3.814697e-05 max_rel=7.326180e-06 PASS
+  log_band_0_500           max_abs=9.536743e-07 max_rel=1.184053e-07 PASS
+  log_band_500_1500        max_abs=4.768372e-07 max_rel=9.624643e-08 PASS
+  log_band_1500_3000       max_abs=9.536743e-07 max_rel=1.191523e-07 PASS
+  log_band_3000_6000       max_abs=9.536743e-07 max_rel=2.147927e-07 PASS
+  log_band_6000_10240      max_abs=9.536743e-07 max_rel=1.391061e-07 PASS
+  HI_raw                   max_abs=4.839897e-05 max_rel=1.461730e-03 (baseline near-zero idx86 ref)
+  HI_ema                   max_abs=5.304813e-06 max_rel=2.267316e-05 PASS
+  slope (W=12)             max_abs=4.702015e-07 PASS
+  Exact alarms: slope_valid=982/982 fixed=982/982 slope=982/982 | 196..491: 0/0 | first=(527, 538)
+  IMS STREAM STATUS: PASS
