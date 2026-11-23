@@ -1,0 +1,159 @@
+====================================================================================================
+STAGE 3b  (one-sided z, sigma floor, cap)
+====================================================================================================
+HI features @3200: ['rms', 'peak_to_peak', 'crest_factor', 'kurtosis', 'log_band_energy_0_400hz', 'log_band_energy_400_800hz', 'log_band_energy_800_1200hz', 'log_band_energy_1200_1600hz']
+
+----------------------------------------------------------------------------------------------------
+3200 Hz  DIRECT chain (normal 48k->3200 single resample_poly(2,30))
+----------------------------------------------------------------------------------------------------
+  features=8  Z_CAP=6  k=3  sigma_floor=0.0001
+  baseline n=21  holdout n=8  threshold = 0.7311 + 3x0.3019 = 1.6369
+  NOTE: holdout n=8 is too small for a conclusive FPR/threshold estimate.
+  FPR on baseline-fit windows (in-sample): 0.000 (0/21)
+  FPR on held-out normal_0               : 0.000 (0/8)
+  normal file     n   medHI     IQR   maxHI  alert rate
+  normal_1       62   3.220   0.138   3.491       1.000
+  normal_2       62   2.733   0.086   2.989       1.000
+  normal_3       62   2.814   0.208   3.233       1.000
+  class               n   AUROC  AUROC13  recall   medHI    IQR  medUncap  frac@cap
+  ball_007           62  1.0000   0.7443   1.000   3.184  0.249     4.920     0.228
+  ball_014           62  1.0000   1.0000   1.000   4.829  1.043    10.595     0.536
+  ball_021           62  1.0000   0.7429   1.000   3.117  0.132     5.393     0.250
+  inner_race_007     62  1.0000   1.0000   1.000   4.869  0.059    32.532     0.625
+  inner_race_014     62  1.0000   0.9780   1.000   3.992  0.543     6.179     0.292
+  inner_race_021     62  1.0000   1.0000   1.000   4.951  0.083    26.236     0.625
+  outer_race_007     62  1.0000   1.0000   1.000   4.743  0.058    10.841     0.540
+  outer_race_014     62  1.0000   0.6238   1.000   3.090  0.582     3.479     0.107
+  outer_race_021     62  1.0000   1.0000   1.000   5.620  0.017    43.164     0.867
+  (AUROC = vs held-out normal_0; AUROC13 = vs pooled normal_1-3; frac@cap = mean over windows & features of z>=cap)
+
+----------------------------------------------------------------------------------------------------
+3200 Hz  TWO-STEP normal chain (48k->12k decimate -> 3200 resample_poly(4,15); same final stage as faults)
+----------------------------------------------------------------------------------------------------
+  features=8  Z_CAP=6  k=3  sigma_floor=0.0001
+  baseline n=21  holdout n=8  threshold = 0.7313 + 3x0.3019 = 1.6372
+  NOTE: holdout n=8 is too small for a conclusive FPR/threshold estimate.
+  FPR on baseline-fit windows (in-sample): 0.000 (0/21)
+  FPR on held-out normal_0               : 0.000 (0/8)
+  normal file     n   medHI     IQR   maxHI  alert rate
+  normal_1       62   3.218   0.138   3.490       1.000
+  normal_2       62   2.733   0.086   2.988       1.000
+  normal_3       62   2.812   0.207   3.231       1.000
+  class               n   AUROC  AUROC13  recall   medHI    IQR  medUncap  frac@cap
+  ball_007           62  1.0000   0.7386   1.000   3.178  0.243     4.906     0.228
+  ball_014           62  1.0000   1.0000   1.000   4.821  1.050    10.572     0.534
+  ball_021           62  1.0000   0.7400   1.000   3.113  0.130     5.380     0.250
+  inner_race_007     62  1.0000   1.0000   1.000   4.869  0.059    32.480     0.625
+  inner_race_014     62  1.0000   0.9773   1.000   3.980  0.546     6.159     0.288
+  inner_race_021     62  1.0000   1.0000   1.000   4.949  0.083    26.162     0.625
+  outer_race_007     62  1.0000   1.0000   1.000   4.743  0.063    10.814     0.540
+  outer_race_014     62  1.0000   0.6162   1.000   3.074  0.585     3.459     0.105
+  outer_race_021     62  1.0000   1.0000   1.000   5.619  0.017    43.051     0.867
+  (AUROC = vs held-out normal_0; AUROC13 = vs pooled normal_1-3; frac@cap = mean over windows & features of z>=cap)
+
+  normal_0 per-feature mean (direct vs two-step, all windows):
+    rms                            direct=    0.0355 twostep=    0.0356 diff=  +0.0001
+    peak_to_peak                   direct=    0.2304 twostep=    0.2309 diff=  +0.0005
+    crest_factor                   direct=    3.3878 twostep=    3.3880 diff=  +0.0001
+    kurtosis                       direct=    2.9907 twostep=    2.9908 diff=  +0.0001
+    log_band_energy_0_400hz        direct=   -8.7772 twostep=   -8.7746 diff=  +0.0027
+    log_band_energy_400_800hz      direct=   -8.0431 twostep=   -8.0376 diff=  +0.0054
+    log_band_energy_800_1200hz     direct=   -9.5805 twostep=   -9.5789 diff=  +0.0016
+    log_band_energy_1200_1600hz    direct=   -9.4547 twostep=   -9.4529 diff=  +0.0018
+  normal_0 windows direct=30 twostep=30
+
+  3200 Hz direct vs two-step, delta AUROC (two-step minus direct) and median HI:
+    ball_007         AUROC 1.0000->1.0000   medHI 3.184->3.178   recall 1.000->1.000
+    ball_014         AUROC 1.0000->1.0000   medHI 4.829->4.821   recall 1.000->1.000
+    ball_021         AUROC 1.0000->1.0000   medHI 3.117->3.113   recall 1.000->1.000
+    inner_race_007   AUROC 1.0000->1.0000   medHI 4.869->4.869   recall 1.000->1.000
+    inner_race_014   AUROC 1.0000->1.0000   medHI 3.992->3.980   recall 1.000->1.000
+    inner_race_021   AUROC 1.0000->1.0000   medHI 4.951->4.949   recall 1.000->1.000
+    outer_race_007   AUROC 1.0000->1.0000   medHI 4.743->4.743   recall 1.000->1.000
+    outer_race_014   AUROC 1.0000->1.0000   medHI 3.090->3.074   recall 1.000->1.000
+    outer_race_021   AUROC 1.0000->1.0000   medHI 5.620->5.619   recall 1.000->1.000
+    threshold 1.6369->1.6372
+
+HI features @12000: ['rms', 'peak_to_peak', 'crest_factor', 'kurtosis', 'log_band_energy_0_400hz', 'log_band_energy_400_800hz', 'log_band_energy_800_1200hz', 'log_band_energy_1200_1600hz', 'log_band_energy_1600_3000hz', 'log_band_energy_3000_6000hz']
+
+----------------------------------------------------------------------------------------------------
+12 kHz  AS-IS (6 bands; normal decimated by FIR 48k->12k, faults native 12k)
+----------------------------------------------------------------------------------------------------
+  features=10  Z_CAP=6  k=3  sigma_floor=0.0001
+  baseline n=82  holdout n=35  threshold = 0.8250 + 3x0.2686 = 1.6309
+  FPR on baseline-fit windows (in-sample): 0.012 (1/82)
+  FPR on held-out normal_0               : 0.000 (0/35)
+  normal file     n   medHI     IQR   maxHI  alert rate
+  normal_1      235   2.000   0.342   3.164       0.945
+  normal_2      235   1.707   0.419   3.165       0.604
+  normal_3      236   1.894   0.506   3.354       0.792
+  class               n   AUROC  AUROC13  recall   medHI    IQR  medUncap  frac@cap
+  ball_007          238  1.0000   1.0000   1.000   4.438  0.177    20.628     0.474
+  ball_014          236  1.0000   0.9999   1.000   5.186  0.589    19.860     0.624
+  ball_021          237  1.0000   1.0000   1.000   4.856  0.290    16.298     0.548
+  inner_race_007    235  1.0000   1.0000   1.000   5.655  0.134    57.331     0.840
+  inner_race_014    236  1.0000   1.0000   1.000   5.246  0.210    62.807     0.665
+  inner_race_021    237  1.0000   1.0000   1.000   5.790  0.077   113.589     0.880
+  outer_race_007    237  1.0000   1.0000   1.000   5.483  0.133   143.569     0.714
+  outer_race_014    236  1.0000   1.0000   1.000   4.141  0.225     9.975     0.389
+  outer_race_021    238  1.0000   1.0000   1.000   5.709  0.038   151.405     0.901
+  (AUROC = vs held-out normal_0; AUROC13 = vs pooled normal_1-3; frac@cap = mean over windows & features of z>=cap)
+
+----------------------------------------------------------------------------------------------------
+12 kHz  DROP 3000-6000 Hz band (5 bands)
+----------------------------------------------------------------------------------------------------
+  features=9  Z_CAP=6  k=3  sigma_floor=0.0001
+  baseline n=82  holdout n=35  threshold = 0.6687 + 3x0.2969 = 1.5593
+  FPR on baseline-fit windows (in-sample): 0.012 (1/82)
+  FPR on held-out normal_0               : 0.000 (0/35)
+  normal file     n   medHI     IQR   maxHI  alert rate
+  normal_1      235   2.108   0.361   3.336       0.996
+  normal_2      235   1.799   0.442   3.336       0.809
+  normal_3      236   1.996   0.533   3.535       0.898
+  class               n   AUROC  AUROC13  recall   medHI    IQR  medUncap  frac@cap
+  ball_007          238  1.0000   1.0000   1.000   4.229  0.206    16.759     0.416
+  ball_014          236  1.0000   0.9999   1.000   5.098  0.533    18.183     0.607
+  ball_021          237  1.0000   1.0000   1.000   4.712  0.332    13.048     0.497
+  inner_race_007    235  1.0000   1.0000   1.000   5.615  0.150    55.831     0.823
+  inner_race_014    236  1.0000   1.0000   1.000   5.156  0.237    63.861     0.628
+  inner_race_021    237  1.0000   1.0000   1.000   5.766  0.086   114.534     0.867
+  outer_race_007    237  1.0000   1.0000   1.000   5.422  0.150   144.372     0.683
+  outer_race_014    236  1.0000   0.9998   1.000   3.880  0.267     7.169     0.321
+  outer_race_021    238  1.0000   1.0000   1.000   5.676  0.042   154.780     0.890
+  (AUROC = vs held-out normal_0; AUROC13 = vs pooled normal_1-3; frac@cap = mean over windows & features of z>=cap)
+
+----------------------------------------------------------------------------------------------------
+12 kHz  MATCHED LPF on faults (decimate-filter magnitude response, zero phase), 6 bands
+----------------------------------------------------------------------------------------------------
+  features=10  Z_CAP=6  k=3  sigma_floor=0.0001
+  baseline n=82  holdout n=35  threshold = 0.8250 + 3x0.2686 = 1.6309
+  FPR on baseline-fit windows (in-sample): 0.012 (1/82)
+  FPR on held-out normal_0               : 0.000 (0/35)
+  normal file     n   medHI     IQR   maxHI  alert rate
+  normal_1      235   2.000   0.342   3.164       0.945
+  normal_2      235   1.707   0.419   3.165       0.604
+  normal_3      236   1.894   0.506   3.354       0.792
+  class               n   AUROC  AUROC13  recall   medHI    IQR  medUncap  frac@cap
+  ball_007          238  1.0000   1.0000   1.000   4.438  0.187    20.562     0.474
+  ball_014          236  1.0000   0.9998   1.000   5.180  0.593    20.817     0.624
+  ball_021          237  1.0000   1.0000   1.000   4.861  0.307    16.193     0.549
+  inner_race_007    235  1.0000   1.0000   1.000   5.656  0.134    57.561     0.840
+  inner_race_014    236  1.0000   1.0000   1.000   5.258  0.207    63.160     0.669
+  inner_race_021    237  1.0000   1.0000   1.000   5.791  0.074   112.748     0.878
+  outer_race_007    237  1.0000   1.0000   1.000   5.483  0.148   143.794     0.714
+  outer_race_014    236  1.0000   1.0000   1.000   4.145  0.225    10.037     0.387
+  outer_race_021    237  1.0000   1.0000   1.000   5.710  0.035   151.270     0.901
+  (AUROC = vs held-out normal_0; AUROC13 = vs pooled normal_1-3; frac@cap = mean over windows & features of z>=cap)
+
+  12 kHz AUROC / recall summary (as-is | drop3k | faults-LPF):
+    ball_007         AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 4.44 | 4.23 | 4.44
+    ball_014         AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.19 | 5.10 | 5.18
+    ball_021         AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 4.86 | 4.71 | 4.86
+    inner_race_007   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.66 | 5.62 | 5.66
+    inner_race_014   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.25 | 5.16 | 5.26
+    inner_race_021   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.79 | 5.77 | 5.79
+    outer_race_007   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.48 | 5.42 | 5.48
+    outer_race_014   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 4.14 | 3.88 | 4.15
+    outer_race_021   AUROC 1.0000 | 1.0000 | 1.0000    recall 1.000 | 1.000 | 1.000    medHI 5.71 | 5.68 | 5.71
+    threshold         1.6309 | 1.5593 | 1.6309
+    normal_1-3 alert  0.94/0.60/0.79 | 1.00/0.81/0.90 | 0.94/0.60/0.79

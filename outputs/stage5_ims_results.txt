@@ -1,0 +1,57 @@
+====================================================================================================
+STAGE 5: IMS 2ND TEST RUN-TO-FAILURE TREND
+====================================================================================================
+Readme verification (Set No. 2): 984 ASCII snapshots, 4 channels (Bearing 1=Ch 1 [idx 0] failed
+with outer-race defect; Bearings 2-4 [Ch 2-4, idx 1-3] did not fail).
+Chronological span: 2004.02.12.10.32.39 -> 2004.02.19.06.22.39 (984 snapshots, 163.83 h)
+Signal processing : native 20480 Hz, window=1024, overlap=0.5 (39 windows/snapshot -> median)
+Bands (Hz)        : [[0, 500], [500, 1500], [1500, 3000], [3000, 6000], [6000, 10240]]
+Features (9)      : ['rms', 'peak_to_peak', 'crest_factor', 'kurtosis', 'log_band_energy_0_500hz', 'log_band_energy_500_1500hz', 'log_band_energy_1500_3000hz', 'log_band_energy_3000_6000hz', 'log_band_energy_6000_10240hz']
+Locked config     : baseline=10%, calibration=10%, EMA alpha=0.1, k_hi=3.0, slope_win=12, k_slope=3.0, consec=3
+Saved snapshot features to: data/processed/ims_2nd_test_features.csv
+
+----------------------------------------------------------------------------------------------------
+Bearing 1 (Ch 1 / idx 0 — FAILED)
+----------------------------------------------------------------------------------------------------
+  Blocks            : baseline 0..97 (n=98), calibration 98..195 (n=98), monitor 196..983 (n=788)
+  HI threshold      : 0.2694 + 3.0x0.0411 = 0.3928   (baseline mean HI=0.4059)
+  Slope threshold   : -0.000311 + 3.0x0.006033 = 0.017787
+  Alarms (3 consec) : healthy 0..195 -> fixed=43 (base=43, cal=0), slope=0 (base=0, cal=0)
+                      post-calibration 196..983 -> fixed=457, slope=69
+  Detector (a) fixed: idx 527 (2004.02.16.02.22.39, t=87.83 h, lead=76.00 h)
+  Detector (b) slope: idx 538 (2004.02.16.04.12.39, t=89.67 h, lead=74.17 h)
+  Spearman rho      : HI_ema vs time = 0.7894 (p=2.609e-210) | HI_raw vs time = 0.8075 (p=2.522e-227)
+  HI summary (EMA)  : max=4.0826, final=3.4157
+
+----------------------------------------------------------------------------------------------------
+Bearing 4 (Ch 4 / idx 3 — CONTROL)
+----------------------------------------------------------------------------------------------------
+  Blocks            : baseline 0..97 (n=98), calibration 98..195 (n=98), monitor 196..983 (n=788)
+  HI threshold      : 0.3013 + 3.0x0.0429 = 0.4299   (baseline mean HI=0.3755)
+  Slope threshold   : -0.000162 + 3.0x0.005169 = 0.015345
+  Alarms (3 consec) : healthy 0..195 -> fixed=14 (base=14, cal=0), slope=0 (base=0, cal=0)
+                      post-calibration 196..983 -> fixed=423, slope=45
+  Detector (a) fixed: idx 539 (2004.02.16.04.22.39, t=89.83 h, lead=74.00 h)
+  Detector (b) slope: idx 620 (2004.02.16.17.52.39, t=103.33 h, lead=60.50 h)
+  Spearman rho      : HI_ema vs time = 0.8182 (p=2.783e-238) | HI_raw vs time = 0.7563 (p=3.617e-183)
+  HI summary (EMA)  : max=3.2589, final=2.6488
+
+Saved HI trend plot to: outputs/plots/ims_2nd_test_hi_trend.png
+
+====================================================================================================
+SENSITIVITY TABLE (alpha in [0.05, 0.1, 0.2] x baseline_fraction in [5%, 10%, 15%]; cal=10% fixed)
+====================================================================================================
+  Alpha  Base% | B1 Hlth(F/S)   B1 Fixed(idx/lead)   B1 Slope(idx/lead)  B1 rho | B4 Hlth(F/S) B4 Post(F/S)  B4 rho
+  ----------------------------------------------------------------------------------------------------------------
+   0.05     5% |    43/0                 535/74.7h            538/74.2h  0.7730 |     0/0        443/141     0.8512
+   0.10     5% |    38/0                 532/75.2h            537/74.3h  0.7924 |     0/0        413/53      0.8300
+   0.20     5% |    14/0                 534/74.8h            538/74.2h  0.8026 |     0/0        387/25      0.8136
+   0.05    10% |    65/0                 526/76.2h            537/74.3h  0.7728 |    20/0        448/130     0.8356
+   0.10    10% |    43/0                 527/76.0h            538/74.2h  0.7894 |    14/0        423/45      0.8182 *
+   0.20    10% |    22/0                 534/74.8h            539/74.0h  0.7983 |     1/0        394/26      0.8055
+   0.05    15% |    99/0                 461/87.0h            534/74.8h  0.7688 |    12/0        444/95      0.8281
+   0.10    15% |    67/0                 461/87.0h            536/74.5h  0.7848 |     2/0        408/39      0.8142
+   0.20    15% |    41/0                 526/76.2h            537/74.3h  0.7933 |     0/0        382/24      0.8038
+  (* marks the locked primary config.yaml setting)
+
+Note: Single run-to-failure recording (IMS Set No. 2); results do not generalise across bearings/machines.

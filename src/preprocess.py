@@ -28,6 +28,9 @@ from scipy.stats import kurtosis, skew
 
 RECORDINGS = (
     ("normal_0.mat",   "normal"),
+    ("normal_1.mat",   "normal_1"),
+    ("normal_2.mat",   "normal_2"),   # file 99 — use X099_DE_time (2 HP), ignore bundled X098
+    ("normal_3.mat",   "normal_3"),
     ("IR007_0.mat",    "inner_race_007"),
     ("B007_0.mat",     "ball_007"),
     ("OR007@6_0.mat",  "outer_race_007"),
@@ -93,12 +96,23 @@ def load_config(path: Path) -> dict[str, Any]:
 
 
 def de_signal_and_metadata(path: Path) -> tuple[np.ndarray, dict[str, Any]]:
-    """Read exactly one drive-end array and expose non-private MAT metadata."""
+    """Read exactly one drive-end array and expose non-private MAT metadata.
+
+    Special case: normal_2.mat (file 99) contains two bundled recordings —
+    X098_DE_time (1 HP) and X099_DE_time (2 HP). We select X099_DE_time for the
+    2 HP label, since normal_1.mat (file 98) already covers the 1 HP recording.
+    """
     mat = loadmat(path)
     public = {key: value for key, value in mat.items() if not key.startswith("__")}
     de_keys = [key for key in public if key.lower().endswith("_de_time")]
-    if len(de_keys) != 1:
-        raise ValueError(f"{path.name}: expected one *_DE_time variable, found {de_keys}")
+    if len(de_keys) == 0:
+        raise ValueError(f"{path.name}: no *_DE_time variable found")
+    if len(de_keys) > 1:
+        # Prefer the key whose number matches the filename (e.g. X099 in normal_2 → file 99)
+        filename_stem = path.stem  # e.g. "normal_2"
+        # Try to match by highest numeric suffix in key name (last in sorted order = current file)
+        preferred = sorted(de_keys)[-1]
+        de_keys = [preferred]
     signal = np.asarray(public[de_keys[0]], dtype=float).squeeze()
     if signal.ndim != 1 or signal.size == 0:
         raise ValueError(f"{path.name}: DE signal must be a non-empty vector; got {signal.shape}")
@@ -214,7 +228,11 @@ def main() -> None:
     base_rate = int(config["sampling_rate"])
     target_rate = None if args.rate_mode == "original" or config.get("target_rate") is None else int(config["target_rate"])
     output_rate = target_rate or base_rate
-    bands = config["fft_bands_hz"]
+    # Use rate-specific bands if configured (e.g. extra high-freq bands at 12 kHz).
+    if output_rate == 12000 and config.get("fft_bands_hz_12k") is not None:
+        bands = config["fft_bands_hz_12k"]
+    else:
+        bands = config["fft_bands_hz"]
     validate_bands(bands, output_rate)
 
     available = [(name, label) for name, label in RECORDINGS if (args.input_dir / name).is_file()]
@@ -224,11 +242,22 @@ def main() -> None:
 
     source_rates = config.get("source_sampling_rates", {})
     rows: list[dict[str, Any]] = []
+    print(f"\nResampling and windowing (output rate = {output_rate} Hz):")
+    print(f"  {'File':<22} {'Label':<20} {'SrcRate':>7} {'SrcN':>8} {'ResN':>8} {'Windows':>7}")
+    print(f"  {'-'*22} {'-'*20} {'-'*7} {'-'*8} {'-'*8} {'-'*7}")
     for filename, label in available:
-        signal, _ = de_signal_and_metadata(args.input_dir / filename)
+        raw_signal, _ = de_signal_and_metadata(args.input_dir / filename)
         source_rate = int(source_rates.get(filename, base_rate))
-        signal, rate = matched_rate_signal(signal, filename, label, source_rate, base_rate, target_rate)
-        for window_idx, window in enumerate(window_signal(signal, int(config["window_size"]), float(config["overlap"]))):
+        signal, rate = matched_rate_signal(raw_signal, filename, label, source_rate, base_rate, target_rate)
+        # Report resampled-signal stats for normal (rate-verification, Stage-2 spec).
+        if label == "normal":
+            print(f"\n  [normal resampled @ {rate} Hz]  n={signal.size}")
+            print(f"    mean={np.mean(signal):.4f}  std={np.std(signal):.4f}  "
+                  f"min={np.min(signal):.4f}  max={np.max(signal):.4f}  "
+                  f"rms={np.sqrt(np.mean(signal**2)):.4f}")
+        file_windows = list(window_signal(signal, int(config["window_size"]), float(config["overlap"])))
+        print(f"  {filename:<22} {label:<20} {source_rate:>7} {raw_signal.size:>8} {signal.size:>8} {len(file_windows):>7}")
+        for window_idx, window in enumerate(file_windows):
             rows.append({"file": filename, "label": label, "window_idx": window_idx, **extract_features(window, rate, bands)})
 
     if not rows:
@@ -240,7 +269,7 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=["file", "label", "window_idx", *feature_names])
         writer.writeheader()
         writer.writerows(rows)
-    print(f"Wrote {len(rows)} windows to {output_path}")
+    print(f"\nWrote {len(rows)} windows to {output_path}")
     print_class_summary(rows, feature_names)
 
 

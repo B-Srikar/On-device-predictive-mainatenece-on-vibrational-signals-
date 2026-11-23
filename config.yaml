@@ -1,3 +1,5 @@
+
+
 # CWRU 0 HP DE recordings requested for this project (12 kHz series).
 sampling_rate: 12000
 window_size: 1024
@@ -10,6 +12,9 @@ ema_alpha: 0.1
 # Update a value only after checking the source recording's CWRU metadata.
 source_sampling_rates:
   normal_0.mat: 48000   # Normal Baseline page: 48 kHz. Confirmed by shaft-freq check (29.91 Hz @ 48k assumption, error 0.02 Hz; 40.44 Hz @ 12k assumption, error 10.50 Hz).
+  normal_1.mat: 48000   # 1 HP (file 98). Confirmed 48 kHz: shaft peak 29.56 Hz, error 0.03 Hz vs expected 29.53 Hz.
+  normal_2.mat: 48000   # 2 HP (file 99, var X099_DE_time). Confirmed 48 kHz: shaft peak 29.19 Hz, error 0.03 Hz vs expected 29.17 Hz.
+  normal_3.mat: 48000   # 3 HP (file 100). Confirmed 48 kHz: shaft peak 28.76 Hz, error 0.07 Hz vs expected 28.83 Hz.
   IR007_0.mat: 12000
   B007_0.mat: 12000
   OR007@6_0.mat: 12000
@@ -22,6 +27,14 @@ source_sampling_rates:
 
 # Hz, evaluated after optional resampling. Bands span 0 to the 3200 Hz Nyquist.
 fft_bands_hz: [[0, 400], [400, 800], [800, 1200], [1200, 1600]]
+# Extra high-frequency bands for 12 kHz path only (Nyquist = 6000 Hz).
+fft_bands_hz_12k: [[0, 400], [400, 800], [800, 1200], [1200, 1600], [1600, 3000], [3000, 6000]]
+
+# Stage-3 HI settings.
+hi_compression: log1p   # Stage 3c: log1p(z) replaces hard hi_z_cap compression
+hi_z_cap: 6         # z-scores clipped to [-6, 6] before squaring (single outlier guard)
+hi_threshold_k: 3   # threshold = mean(holdout_HI) + k * std(holdout_HI)
+hi_sigma_floor: 0.0001  # Stage 3b: minimum per-feature sigma used in z = (x-mu)/max(sigma, floor)
 
 # Health-index evaluation settings.
 evaluation_rates: [12000, 3200]
@@ -37,11 +50,26 @@ iforest_subsample: 256
 iforest_seed: 42
 iforest_threshold_quantile: 0.95
 
-# IMS run-to-failure settings. Set these two fields after downloading one IMS test
-# set beneath data/raw/ims/; do not mix snapshot sequences from different tests.
-ims_snapshot_directory:
-ims_channel:
+# IMS run-to-failure settings (Stage 5 — locked before running).
+# Per Readme Document for IMS Bearing Data.pdf (Set No. 2, 984 files, 4 ch):
+#   Ch 1 (index 0) = Bearing 1 (outer race failure at end of test)
+#   Ch 2-4 (indices 1-3) = Bearings 2-4 (did not fail); Ch 4 (index 3) is farthest control.
+ims_snapshot_directory: data/raw/ims/2nd_test
+ims_channel: 0
+ims_control_channel: 3
 ims_sampling_rate: 20480
-ims_baseline_snapshots: 50
-ims_slope_window: 20
+ims_window_size: 1024
+ims_overlap: 0.5
+# 5 contiguous bands spanning 0 to Nyquist (10240 Hz):
+#   0-500: shaft (~33.3 Hz) & bearing fault fundamentals; 500-1500: low-mid harmonics;
+#   1500-3000: mid resonance; 3000-6000: primary bearing resonance; 6000-10240: high-freq impact.
+ims_fft_bands_hz: [[0, 500], [500, 1500], [1500, 3000], [3000, 6000], [6000, 10240]]
+ims_baseline_fraction: 0.10
+ims_calibration_fraction: 0.10
+ims_ema_alpha: 0.1
+ims_threshold_k: 3.0
+ims_slope_window: 12
 ims_slope_threshold_sigma: 3.0
+ims_consecutive_alarms: 3
+ims_sensitivity_alphas: [0.05, 0.1, 0.2]
+ims_sensitivity_baseline_fractions: [0.05, 0.10, 0.15]

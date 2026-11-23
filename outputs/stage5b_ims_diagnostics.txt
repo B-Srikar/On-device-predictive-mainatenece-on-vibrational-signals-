@@ -1,0 +1,205 @@
+============================================================================================================
+ITEM 1: ALL 4 BEARINGS THROUGH LOCKED STAGE 5 PIPELINE (snapshots 0..983)
+============================================================================================================
+Saved all-4 snapshot median features to: data/processed/ims_2nd_test_all4_features.csv
+Bearing                       HI_thr   Slp_thr  Hlth(F/S)  Post(F/S)  FirstFixed(idx/lead)  FirstSlope(idx/lead)   MaxHI   EndHI
+------------------------------------------------------------------------------------------------------------------------------
+Bearing 1 (Ch 1 — Failed OR)  0.3928  0.017787       43/0     457/69          527 / 76.00h          538 / 74.17h   4.083   3.416
+Bearing 2 (Ch 2 — Normal)     0.5533  0.012305        0/0     274/73          710 / 45.50h          706 / 46.17h   2.770   2.244
+Bearing 3 (Ch 3 — Normal)     0.4231  0.015928       35/0      234/0          750 / 38.83h                  none   1.890   1.531
+Bearing 4 (Ch 4 — Normal)     0.4299  0.015345       14/0     423/45          539 / 74.00h          620 / 60.50h   3.259   2.649
+
+============================================================================================================
+ITEM 2: FEATURE DECOMPOSITION AT SNAPSHOTS 450, 600, 800, 950 (Bearing 1 vs Bearing 4)
+============================================================================================================
+
+--- Bearing 1 (Ch 1 — Failed OR) ---
+  Snapshot 450 (2004.02.15.13.32.39, t=75.00h): HI_raw=0.1901, HI_ema=0.2914 | time-domain share=99.7%, FFT bands share=0.3%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                    0.000      0.0000       0.0
+    peak_to_peak                           0.259      0.0529      16.3
+    crest_factor                           0.663      0.2584      79.5
+    kurtosis                               0.121      0.0130       4.0
+    log_band_energy_0_500hz                0.000      0.0000       0.0
+    log_band_energy_500_1500hz             0.000      0.0000       0.0
+    log_band_energy_1500_3000hz            0.000      0.0000       0.0
+    log_band_energy_3000_6000hz            0.030      0.0008       0.3
+    log_band_energy_6000_10240hz           0.000      0.0000       0.0
+    Bands breakdown: 0_500hz=0.0%, 500_1500hz=0.0%, 1500_3000hz=0.0%, 3000_6000hz=0.3%, 6000_10240hz=0.0%
+  Snapshot 600 (2004.02.16.14.32.39, t=100.00h): HI_raw=1.3207, HI_ema=1.3421 | time-domain share=52.4%, FFT bands share=47.6%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                   10.016      5.7570      36.7
+    peak_to_peak                           3.530      2.2825      14.5
+    crest_factor                           0.000      0.0000       0.0
+    kurtosis                               0.542      0.1878       1.2
+    log_band_energy_0_500hz                0.873      0.3938       2.5
+    log_band_energy_500_1500hz             0.000      0.0000       0.0
+    log_band_energy_1500_3000hz            0.575      0.2065       1.3
+    log_band_energy_3000_6000hz           11.603      6.4207      40.9
+    log_band_energy_6000_10240hz           0.956      0.4499       2.9
+    Bands breakdown: 0_500hz=2.5%, 500_1500hz=0.0%, 1500_3000hz=1.3%, 3000_6000hz=40.9%, 6000_10240hz=2.9%
+  Snapshot 800 (2004.02.17.23.52.39, t=133.33h): HI_raw=2.2266, HI_ema=2.2404 | time-domain share=42.5%, FFT bands share=57.5%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                   21.295      9.6371      21.6
+    peak_to_peak                          10.380      5.9141      13.3
+    crest_factor                           0.000      0.0000       0.0
+    kurtosis                               5.334      3.4076       7.6
+    log_band_energy_0_500hz                0.085      0.0066       0.0
+    log_band_energy_500_1500hz             5.511      3.5100       7.9
+    log_band_energy_1500_3000hz           18.470      8.8142      19.8
+    log_band_energy_3000_6000hz           14.526      7.5215      16.9
+    log_band_energy_6000_10240hz          10.136      5.8089      13.0
+    Bands breakdown: 0_500hz=0.0%, 500_1500hz=7.9%, 1500_3000hz=19.8%, 3000_6000hz=16.9%, 6000_10240hz=13.0%
+  Snapshot 950 (2004.02.19.00.52.39, t=158.33h): HI_raw=3.2139, HI_ema=3.1387 | time-domain share=40.9%, FFT bands share=59.1%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                   79.247     19.2292      20.7
+    peak_to_peak                          39.007     13.6092      14.6
+    crest_factor                           1.744      1.0190       1.1
+    kurtosis                               6.616      4.1222       4.4
+    log_band_energy_0_500hz               13.289      7.0729       7.6
+    log_band_energy_500_1500hz            33.886     12.6174      13.6
+    log_band_energy_1500_3000hz           30.987     12.0086      12.9
+    log_band_energy_3000_6000hz           39.089     13.6243      14.7
+    log_band_energy_6000_10240hz          21.384      9.6618      10.4
+    Bands breakdown: 0_500hz=7.6%, 500_1500hz=13.6%, 1500_3000hz=12.9%, 3000_6000hz=14.7%, 6000_10240hz=10.4%
+
+--- Bearing 4 (Ch 4 — Normal) ---
+  Snapshot 450 (2004.02.15.13.32.39, t=75.00h): HI_raw=0.3860, HI_ema=0.3715 | time-domain share=19.2%, FFT bands share=80.8%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                    0.661      0.2575      19.2
+    peak_to_peak                           0.000      0.0000       0.0
+    crest_factor                           0.000      0.0000       0.0
+    kurtosis                               0.000      0.0000       0.0
+    log_band_energy_0_500hz                0.824      0.3611      26.9
+    log_band_energy_500_1500hz             0.000      0.0000       0.0
+    log_band_energy_1500_3000hz            0.707      0.2860      21.3
+    log_band_energy_3000_6000hz            0.257      0.0525       3.9
+    log_band_energy_6000_10240hz           0.858      0.3841      28.6
+    Bands breakdown: 0_500hz=26.9%, 500_1500hz=0.0%, 1500_3000hz=21.3%, 3000_6000hz=3.9%, 6000_10240hz=28.6%
+  Snapshot 600 (2004.02.16.14.32.39, t=100.00h): HI_raw=0.7488, HI_ema=0.4896 | time-domain share=45.6%, FFT bands share=54.4%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                    2.023      1.2241      24.3
+    peak_to_peak                           1.040      0.5082      10.1
+    crest_factor                           0.800      0.3454       6.8
+    kurtosis                               0.607      0.2252       4.5
+    log_band_energy_0_500hz                0.000      0.0000       0.0
+    log_band_energy_500_1500hz             0.252      0.0505       1.0
+    log_band_energy_1500_3000hz            1.320      0.7084      14.0
+    log_band_energy_3000_6000hz            2.492      1.5634      31.0
+    log_band_energy_6000_10240hz           0.914      0.4214       8.3
+    Bands breakdown: 0_500hz=0.0%, 500_1500hz=1.0%, 1500_3000hz=14.0%, 3000_6000hz=31.0%, 6000_10240hz=8.3%
+  Snapshot 800 (2004.02.17.23.52.39, t=133.33h): HI_raw=1.4223, HI_ema=1.4376 | time-domain share=28.9%, FFT bands share=71.1%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                    5.455      3.4779      19.1
+    peak_to_peak                           2.799      1.7815       9.8
+    crest_factor                           0.000      0.0000       0.0
+    kurtosis                               0.000      0.0000       0.0
+    log_band_energy_0_500hz                0.000      0.0000       0.0
+    log_band_energy_500_1500hz             5.907      3.7345      20.5
+    log_band_energy_1500_3000hz           10.722      6.0587      33.3
+    log_band_energy_3000_6000hz            2.078      1.2639       6.9
+    log_band_energy_6000_10240hz           2.955      1.8907      10.4
+    Bands breakdown: 0_500hz=0.0%, 500_1500hz=20.5%, 1500_3000hz=33.3%, 3000_6000hz=6.9%, 6000_10240hz=10.4%
+  Snapshot 950 (2004.02.19.00.52.39, t=158.33h): HI_raw=2.7198, HI_ema=2.6418 | time-domain share=38.5%, FFT bands share=61.5%
+    Feature                          z_one_sided  log1p(z)^2  Share(%)
+    rms                                   47.757     15.1076      22.7
+    peak_to_peak                          24.567     10.5059      15.8
+    crest_factor                           0.000      0.0000       0.0
+    kurtosis                               0.000      0.0000       0.0
+    log_band_energy_0_500hz               24.851     10.5777      15.9
+    log_band_energy_500_1500hz            38.955     13.5996      20.4
+    log_band_energy_1500_3000hz           14.263      7.4281      11.2
+    log_band_energy_3000_6000hz           12.436      6.7491      10.1
+    log_band_energy_6000_10240hz           4.030      2.6094       3.9
+    Bands breakdown: 0_500hz=15.9%, 500_1500hz=20.4%, 1500_3000hz=11.2%, 3000_6000hz=10.1%, 6000_10240hz=3.9%
+
+============================================================================================================
+ITEM 3: CORRELATION BETWEEN BEARING 1 AND BEARING 4 TRAJECTORIES
+============================================================================================================
+  Window slice      Series          n   Pearson r    p_pearson  Spearman rho   p_spearman
+  -------------------------------------------------------------------------------------
+  196..983          rms           788      0.9211    0.000e+00        0.8979   2.420e-282
+  196..983          HI_raw        788      0.9278    0.000e+00        0.8978   4.368e-282
+  196..983          HI_ema        788      0.9414    0.000e+00        0.9427    0.000e+00
+  525..983          rms           459      0.9106   1.962e-177        0.9366   2.652e-210
+  525..983          HI_raw        459      0.9412   1.484e-217        0.9591   1.286e-252
+  525..983          HI_ema        459      0.9483   6.985e-230        0.9824    0.000e+00
+
+============================================================================================================
+ITEM 4: RAW SNAPSHOT INSPECTION — LAST 5 (979..983) & FIRST 60 (0..59)
+============================================================================================================
+
+  Reference raw medians [steady healthy 200..450] and [late 950..978]:
+    Ch 1: steady_200_450 rms=0.0771, ptp=0.7520 | late_950_978 rms=0.2615, ptp=2.1920
+    Ch 2: steady_200_450 rms=0.0938, ptp=0.8590 | late_950_978 rms=0.1484, ptp=1.2140
+    Ch 3: steady_200_450 rms=0.0999, ptp=1.4180 | late_950_978 rms=0.1524, ptp=1.4340
+    Ch 4: steady_200_450 rms=0.0554, ptp=0.4850 | late_950_978 rms=0.1087, ptp=0.8110
+
+  Last 5 snapshots (979..983):
+     Idx File                   Ch    Len      Min      Max     Mean      Std      RMS    Kurt  Note
+     979 2004.02.19.05.42.39     1  20480  -5.0000   4.9980  -0.0028   0.7250   0.7250   15.58  
+     979 2004.02.19.05.42.39     2  20480  -0.8840   1.1180  -0.0008   0.2183   0.2183    5.45  
+     979 2004.02.19.05.42.39     3  20480  -0.7690   0.6860  -0.0019   0.1706   0.1706    2.90  
+     979 2004.02.19.05.42.39     4  20480  -0.5440   0.5420  -0.0029   0.1483   0.1484    2.91  
+     980 2004.02.19.05.52.39     1  20480  -2.8810   2.6880  -0.0045   0.4620   0.4620    6.76  
+     980 2004.02.19.05.52.39     2  20480  -0.6370   0.9080  -0.0009   0.1708   0.1708    3.91  
+     980 2004.02.19.05.52.39     3  20480  -0.7250   0.7640  -0.0013   0.1779   0.1779    2.68  
+     980 2004.02.19.05.52.39     4  20480  -0.4490   0.5270  -0.0033   0.1166   0.1166    3.26  
+     981 2004.02.19.06.02.39     1  20480  -3.6960   3.5010  -0.0017   0.4838   0.4838    7.89  
+     981 2004.02.19.06.02.39     2  20480  -0.7520   0.8910  -0.0016   0.1936   0.1936    3.33  
+     981 2004.02.19.06.02.39     3  20480  -0.7840   0.8450  -0.0014   0.1874   0.1874    2.86  
+     981 2004.02.19.06.02.39     4  20480  -0.4790   0.6250  -0.0033   0.1305   0.1306    3.70  
+     982 2004.02.19.06.12.39     1  20480   0.0000   0.0050   0.0019   0.0010   0.0021    6.64  ANOMALOUS (near-zero)
+     982 2004.02.19.06.12.39     2  20480   0.0000   0.0070   0.0037   0.0015   0.0040    1.13  ANOMALOUS (near-zero)
+     982 2004.02.19.06.12.39     3  20480   0.0000   0.0070   0.0037   0.0015   0.0040    1.06  ANOMALOUS (near-zero)
+     982 2004.02.19.06.12.39     4  20480  -0.0020   0.0050   0.0018   0.0012   0.0022    4.65  ANOMALOUS (near-zero)
+     983 2004.02.19.06.22.39     1  20480  -0.0050   0.0020  -0.0012   0.0010   0.0015    1.39  ANOMALOUS (near-zero)
+     983 2004.02.19.06.22.39     2  20480  -0.0020   0.0020  -0.0007   0.0010   0.0012    1.91  ANOMALOUS (near-zero)
+     983 2004.02.19.06.22.39     3  20480  -0.0050   0.0020  -0.0007   0.0010   0.0012    1.93  ANOMALOUS (near-zero)
+     983 2004.02.19.06.22.39     4  20480  -0.0050   0.0020  -0.0017   0.0013   0.0021    4.17  ANOMALOUS (near-zero)
+
+  First 60 snapshots (0..59) vs calibration block (98..195):
+    Ch 1: lens=[20480], first60 rms=[0.0742, 0.0802] (med=0.0783), val_range=[-0.5760, 0.6080] | cal rms med=0.0768 (sd=0.0010) | near_zero=[] | |rms-cal_med|>3sd count=4 [13, 23, 31, 37]
+           snap 0: rms=0.0742, min=-0.3860, max=0.4540, mean=-0.0102
+    Ch 2: lens=[20480], first60 rms=[0.0909, 0.0979] (med=0.0951), val_range=[-0.6130, 0.6710] | cal rms med=0.0951 (sd=0.0008) | near_zero=[] | |rms-cal_med|>3sd count=3 [0, 5, 34]
+           snap 0: rms=0.0909, min=-0.5130, max=0.4640, mean=-0.0127
+    Ch 3: lens=[20480], first60 rms=[0.1019, 0.1107] (med=0.1055), val_range=[-0.9810, 1.0570] | cal rms med=0.1023 (sd=0.0018) | near_zero=[] | |rms-cal_med|>3sd count=10 [0, 1, 2, 3, 5, 8, 9, 16, 24, 34]
+           snap 0: rms=0.1094, min=-0.9110, max=1.0230, mean=-0.0145
+    Ch 4: lens=[20480], first60 rms=[0.0541, 0.0573] (med=0.0556), val_range=[-0.5250, 0.5130] | cal rms med=0.0554 (sd=0.0007) | near_zero=[] | |rms-cal_med|>3sd count=0 []
+           snap 0: rms=0.0541, min=-0.2640, max=0.1930, mean=-0.0100
+
+  Plotted all 4 channels with last snapshot   : outputs/plots/ims_stage5b_all4_hi_with_last.png
+  Plotted all 4 channels without last snapshot: outputs/plots/ims_stage5b_all4_hi_without_last.png
+  End-of-test HI impact of dropping snapshot 983 (idx 982 vs 983):
+    bearing_1: with_last end_HI=3.4157 (raw[983]=0.0000, max=4.0826, lead_fix=76.00h) | without_last end_HI=3.7952 (raw[982]=1.2095, max=4.0826, lead_fix=75.83h)
+    bearing_2: with_last end_HI=2.2435 (raw[983]=0.0000, max=2.7698, lead_fix=45.50h) | without_last end_HI=2.4928 (raw[982]=0.0000, max=2.7698, lead_fix=45.33h)
+    bearing_3: with_last end_HI=1.5311 (raw[983]=0.0000, max=1.8902, lead_fix=38.83h) | without_last end_HI=1.7012 (raw[982]=0.0000, max=1.8902, lead_fix=38.67h)
+    bearing_4: with_last end_HI=2.6488 (raw[983]=0.0000, max=3.2589, lead_fix=74.00h) | without_last end_HI=2.9432 (raw[982]=0.1019, max=3.2589, lead_fix=73.83h)
+
+============================================================================================================
+ITEM 5: EMA INITIALIZATION & WINDOWED SPEARMAN RHO (196..983 and 525..983)
+============================================================================================================
+  EMA initialization check (hi_ema[0] == hi_raw[0]):
+    bearing_1: hi_raw[0]=0.491295, hi_ema[0]=0.491295, diff=0.00e+00
+    bearing_2: hi_raw[0]=0.550496, hi_ema[0]=0.550496, diff=0.00e+00
+    bearing_3: hi_raw[0]=0.901600, hi_ema[0]=0.901600, diff=0.00e+00
+    bearing_4: hi_raw[0]=0.149983, hi_ema[0]=0.149983, diff=0.00e+00
+
+  Bearing                       196..983 EMA rho  196..983 Raw rho  525..983 EMA rho  525..983 Raw rho  525..982 EMA rho
+  --------------------------------------------------------------------------------------------------------------------
+  Bearing 1 (Ch 1 — Failed OR)            0.9300            0.9060            0.9494            0.9051            0.9491
+  Bearing 2 (Ch 2 — Normal)               0.6012            0.6698            0.9697            0.9093            0.9695
+  Bearing 3 (Ch 3 — Normal)               0.5992            0.6666            0.8944            0.8893            0.8939
+  Bearing 4 (Ch 4 — Normal)               0.9100            0.8499            0.9568            0.9135            0.9566
+
+============================================================================================================
+ITEM 6 [EXPLORATORY / POST-HOC — NOT PART OF PRIMARY METHOD]: CROSS-BEARING RELATIVE Z-SCORES
+============================================================================================================
+  Definition: diff_b[t] = hi_ema[b, t] - median(hi_ema[others, t]); z_rel[b, t] = (diff_b[t] - mean(diff_b[:98])) / max(std(diff_b[:98], ddof=0), sigma_floor)
+
+  Bearing                      diff@450 diff@600 diff@800 diff@950 z_rel@450 z_rel@600 z_rel@800 z_rel@950 med_z(525+) max_z(525+) frac>3(525+)
+  ----------------------------------------------------------------------------------------------------------------------------------------
+  Bearing 1 (Ch 1 — Failed OR)    0.110    1.153    1.379    1.070      1.26     15.85     19.01     14.69       19.40       28.09        0.993
+  Bearing 2 (Ch 2 — Normal)      -0.110   -0.300   -0.576   -0.573     -1.18     -3.11     -5.92     -5.89       -5.93       -1.92        0.000
+  Bearing 3 (Ch 3 — Normal)      -0.143   -0.374   -0.752   -0.960     -1.18     -2.63     -5.01     -6.31       -5.45       -1.54        0.000
+  Bearing 4 (Ch 4 — Normal)       0.191    0.300    0.576    0.573      2.17      3.25      5.98      5.95        5.99        8.65        0.917
