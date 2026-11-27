@@ -19,9 +19,9 @@
   Sequence status: PASS
 
 === 3. LAPTOP BENCHMARK (1024 samples @ 3200 Hz = 0.320 s/window) ===
-  Mean latency   : 17.60 us (0.0176 ms)
-  p99 latency    : 44.00 us (0.0440 ms)
-  Real-time frac : 5.500312e-05 (compute_time / 0.32 s; speedup = 18181x real-time)
+  Mean latency   : 19.38 us (0.0194 ms)
+  p99 latency    : 36.00 us (0.0360 ms)
+  Real-time frac : 6.055312e-05 (compute_time / 0.32 s; speedup = 16514x real-time)
 
 === 4. MEMORY FOOTPRINT (sizeof) ===
   Static RAM buffers:
